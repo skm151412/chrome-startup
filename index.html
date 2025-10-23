@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Start • SK</title>
+
+    <!-- Keep the exact same fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <!-- Pacifico is imported inside style.css and kept as-is -->
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Background orbs canvas (desktop only, toggled via JS) -->
+    <canvas id="bg-orbs" aria-hidden="true"></canvas>
+    <div id="main-wrapper" class="fancy-scrollbar gradient-bg">
+      <div id="main">
+        <div id="content" class="container">
+          <nav id="links-container" class="top-links">
+            <a href="https://gmail.com">Gmail</a>
+            <a href="https://unsplash.com">Unsplash</a>
+            <a href="http://www.devrahul.in">My site</a>
+            <a href="https://beacons.ai/developerrahul">About</a>
+            <div class="controls" aria-label="Quick controls">
+              <button id="particles-toggle" class="icon-btn" type="button" aria-pressed="true" title="Toggle background orbs" aria-label="Toggle background orbs">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1zm7 9a7 7 0 1 1-14 0 7 7 0 0 1 14 0zm-1 9a1 1 0 0 1-1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 1-1 1zM4 13a1 1 0 1 1 0-2H5a1 1 0 1 1 0 2H4zm14.95-6.536a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM4.222 18.364a1 1 0 0 1 1.414-1.414l.707.707A1 1 0 1 1 4.93 19.07l-.707-.707zM5.636 4.222a1 1 0 0 1 1.414 1.414l-.707.707A1 1 0 1 1 4.93 4.93l.707-.707zM18.364 19.778a1 1 0 0 1-1.414-1.414l.707-.707a1 1 0 1 1 1.414 1.414l-.707.707z"/></svg>
+              </button>
+              <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" title="Toggle theme" aria-label="Toggle theme">
+                <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zm10.48 0l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM12 4a1 1 0 011 1v2a1 1 0 11-2 0V5a1 1 0 011-1zm7 7a7 7 0 11-14 0 7 7 0 0114 0zM4 13a1 1 0 100-2H2a1 1 0 100 2h2zm18 0a1 1 0 100-2h-2a1 1 0 100 2h2zm-9 7a1 1 0 011-1h0a1 1 0 011 1v2a1 1 0 11-2 0v-2zM6.76 19.16l-1.8 1.79 1.41 1.41 1.79-1.8-1.4-1.4zm10.48 0l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4z"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 1 0 9.79 9.79z"/></svg>
+              </button>
+              <span id="live-clock" class="clock" aria-live="polite"></span>
+            </div>
+          </nav>
+
+          <header id="header-container" class="shell">
+            <div class="parent hero">
+              <div class="child hero-atom">
+                <main>
+                  <div class="atom">
+                    <div class="electron"></div>
+                    <div class="electron-alpha"></div>
+                    <div class="electron-omega"></div>
+                  </div>
+                </main>
+
+                <!-- Quotes Widget (minimal, non-invasive) -->
+                <section id="quote-widget" class="card quote-card" role="region" aria-labelledby="quote-title" aria-live="polite" data-widget="quotes">
+                  <h3 id="quote-title" class="sr-only">Daily Quote</h3>
+                  <div class="quote-content" aria-hidden="false">
+                    <p class="quote-text" aria-live="polite"></p>
+                    <p class="quote-author"></p>
+                  </div>
+                  <div class="quote-controls">
+                    <button class="btn small" id="quote-next" aria-label="Next quote" type="button">Next</button>
+                    <button class="btn small" id="quote-reset" aria-label="Reset shown quotes" type="button">Reset</button>
+                    <button class="btn icon small" id="quote-toggle" aria-pressed="true" aria-label="Hide quotes" type="button">Hide</button>
+                  </div>
+                </section>
+              </div>
+
+              <div class="child hero-profile">
+                <button type="button" id="user-menu-button" class="avatar-button float-y">
+                  <img src="dp.png" alt="Profile" />
+                </button>
+                <div class="social-buttons">
+                  <a href="https://www.instagram.com" class="social-button social-button--instagram" aria-label="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
+                  </a>
+                  <a href="https://www.youtube.com" class="social-button social-button--youtube" aria-label="YouTube">
+                    <img src="https://img.freepik.com/premium-vector/round-youtube-logo-isolated-white-background_469489-983.jpg?semt=ais_hybrid&w=740&q=80" alt="YouTube" />
+                  </a>
+                  <a href="https://www.facebook.com" class="social-button social-button--facebook" aria-label="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" />
+                  </a>
+                  <a href="https://web.whatsapp.com/" class="social-button social-button--whatsapp" aria-label="WhatsApp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+                  </a>
+                  <a href="https://www.snapchat.com/" class="social-button social-button--snapchat" aria-label="Snapchat">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/04/Snapchat-Logo.png" alt="Snapchat" />
+                  </a>
+                  <a href="https://github.com" class="social-button social-button--github" aria-label="GitHub">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" />
+                  </a>
+                  <a href="https://codepen.io" class="social-button social-button--codepen" aria-label="CodePen">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1377/1377243.png" alt="CodePen" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="headline">
+            <h3 class="txt-ne" data-text="Developer Rahul">
+              <div id="editable-text" contenteditable="true"></div>
+            </h3>
+          </div>
+
+          <section id="search-container" class="shell reveal-up">
+            <div id="search-input-container">
+              <img src="https://assets.codepen.io/1468070/Google+G+Icon.png" alt="Google G" />
+              <input type="text" placeholder="Search anything" id="search" aria-autocomplete="list" aria-controls="search-suggestions" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" />
+            </div>
+            <div id="search-suggestions" class="suggestions-panel" role="listbox" aria-label="Search suggestions" hidden></div>
+            <button id="image-button" onclick="googleSearch();" type="button" title="Search">
+              <i class="fa-regular fa-search"></i>
+            </button>
+            <button id="mic-button" type="button" title="Voice">
+              <i class="fa-regular fa-microphone"></i>
+            </button>
+          </section>
+
+          <section id="apps-container" class="shell reveal-up">
+            <a href="https://claude.ai/new" id="link" target="_blank" class="app-link">
+              <img src="https://zorgle.co.uk/wp-content/uploads/2024/11/Claude-ai-logo.png" alt="Claude" />
+              <div class="label">
+                <span class="name">CLOUD AI</span>
+                <!-- <span class="url" contenteditable="false">stackoverflow.com</span> -->
+              </div>
+            </a>
+
+            <a href="https://github.com" id="link2" target="_blank" class="app-link">
+              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" />
+              <div class="label">
+                <span class="name">GitHub</span>
+                <!-- <span class="url" contenteditable="false">github.com</span> -->
+              </div>
+            </a>
+
+            <a href="https://chat.openai.com" target="_blank" class="app-link">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMdM9MEQ0ExL1PmInT3U5I8v63YXBEdoIT0Q&s" alt="ChatGPT" />
+              <div class="label">
+                <span class="name" style="color:#10A37F;">Chat GPT</span>
+              </div>
+            </a>
+
+            <a href="https://codepen.io" target="_blank" class="app-link">
+              <img src="https://cdn-icons-png.flaticon.com/512/1377/1377243.png" alt="CodePen" />
+              <div class="label">
+                <span class="name">CodePen</span>
+              </div>
+            </a>
+
+            <a href="https://gemini.google.com/app" target="_blank" class="app-link">
+              <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-3.fit_lim.size_376x.webp" alt="Gemini" />
+              <div class="label">
+                <span class="name" style="color:#1DB954;">Gemini</span>
+              </div>
+            </a>
+
+            <a href="https://www.youtube.com/playlist?list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w" target="_blank" class="app-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube" />
+              <div class="label">
+                <span class="name" style="color:#FF0000;">WEBDEV</span>
+              </div>
+            </a>
+
+            <a href="https://www.perplexity.ai/" target="_blank" class="app-link">
+              <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/1.65.0/files/dark/perplexity-color.png" alt="Perplexity" />
+              <div class="label">
+                <span class="name" style="color:#007bff;">Perplexity</span>
+              </div>
+            </a>
+
+            <a href="https://www.xbox.com" target="_blank" class="app-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Xbox_app_logo.svg/2048px-Xbox_app_logo.svg.png" alt="Xbox" />
+              <div class="label">
+                <span class="name" style="color:#107C10;">Xbox</span>
+              </div>
+            </a>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const urlSpans = document.querySelectorAll('.url');
+      urlSpans.forEach(function (urlSpan) {
+        urlSpan.addEventListener('click', function (event) {
+          event.preventDefault();
+        });
+      });
+    </script>
+
+    <!-- updating the code title and flaticon icon  -->
+    <script>
+      const savedUrl = localStorage.getItem('url');
+      const nameSpan = document.querySelector('.name');
+      const urlSpan = document.querySelector('.url');
+      const icon = document.querySelector('.fa-stack-overflow');
+      const link = document.querySelector('#link');
+
+      // nameSpan.addEventListener('input', updateLink);
+      if (urlSpan) urlSpan.addEventListener('input', updateLink);
+
+      function updateLink() {
+        const domain = new URL('http://' + urlSpan.textContent).hostname.replace('www.', '');
+        if (link) link.querySelector('.name').textContent = domain;
+        if (link) link.href = 'http://' + urlSpan.textContent;
+        const iconClass = 'fa-brands fa-' + domain.split('.')[0];
+        if (icon) icon.className = iconClass;
+        localStorage.setItem('url', urlSpan.textContent);
+      }
+
+      window.addEventListener('load', function () {
+        const savedUrl = localStorage.getItem('url');
+        if (savedUrl && urlSpan) {
+          urlSpan.textContent = savedUrl;
+          updateLink();
+        }
+      });
+    </script>
+
+    <script>
+      function googleSearch() {
+        var text = document.getElementById("search").value;
+        var cleanQuery = text.replace(" ", "+", text);
+        var url = 'http://www.google.com/search?q=' + cleanQuery;
+        window.location.href = url;
+      }
+    </script>
+    <!-- Load quotes widget script non-blocking -->
+    <script src="scripts/quotes.js" defer></script>
+    <script defer src="scripts/ux.js"></script>
+    <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
+  </body>
+ </html>
